@@ -1,0 +1,65 @@
+[
+  {
+    "monthNo": 5,
+    "monthName": "May",
+    "year": 2018,
+    "recordDate": "2018-05-31T00:00:00",
+    "volumeToday": 4120.57,
+    "volumeLastYear": 4030.01,
+    "avgVolume": 4076.05
+  },
+  {
+    "monthNo": 7,
+    "monthName": "July",
+    "year": 2018,
+    "recordDate": "2018-07-02T00:00:00",
+    "volumeToday": 3575.34,
+    "volumeLastYear": 4109.47,
+    "avgVolume": 3585.53
+  },
+  {
+    "monthNo": 7,
+    "monthName": "July",
+    "year": 2018,
+    "recordDate": "2018-07-30T00:00:00",
+    "volumeToday": 3414.44,
+    "volumeLastYear": 3996.31,
+    "avgVolume": 3291.55
+  },
+  {
+    "monthNo": 8,
+    "monthName": "August",
+    "year": 2018,
+    "recordDate": "2018-08-31T00:00:00",
+    "volumeToday": 4131.31,
+    "volumeLastYear": 4063.93,
+    "avgVolume": 3970.49
+  },
+  {
+    "monthNo": 9,
+    "monthName": "September",
+    "year": 2018,
+    "recordDate": "2018-09-29T00:00:00",
+    "volumeToday": 4088.40,
+    "volumeLastYear": 4052.60,
+    "avgVolume": 4078.47
+  },
+  {
+    "monthNo": 10,
+    "monthName": "October",
+    "year": 2018,
+    "recordDate": "2018-10-31T00:00:00",
+    "volumeToday": 4066.99,
+    "volumeLastYear": 4132.38,
+    "avgVolume": 4061.88
+  },
+  {
+    "monthNo": 11,
+    "monthName": "November",
+    "year": 2018,
+    "recordDate": "2018-11-30T00:00:00",
+    "volumeToday": 4131.31,
+    "volumeLastYear": 4041.30,
+    "avgVolume": 4071.69
+  }
+]

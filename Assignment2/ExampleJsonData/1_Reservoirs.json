@@ -1,0 +1,152 @@
+[
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 1,
+      "reservoirName": "Barossa Reservoir",
+      "capacityML": 4375,
+      "latitude": -34.65,
+      "longitude": 138.85
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 2,
+      "reservoirName": "Happy Valley Reservoir",
+      "capacityML": 12650,
+      "latitude": -35.07,
+      "longitude": 138.57
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 3,
+      "reservoirName": "Hope Valley Reservoir",
+      "capacityML": 2935,
+      "latitude": -34.85,
+      "longitude": 138.69
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 4,
+      "reservoirName": "Kangaroo Creek Reservoir",
+      "capacityML": 18685,
+      "latitude": -34.86,
+      "longitude": 138.79
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 5,
+      "reservoirName": "Little Para Reservoir",
+      "capacityML": 20891,
+      "latitude": -34.75,
+      "longitude": 138.73
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 6,
+      "reservoirName": "Millbrook Reservoir",
+      "capacityML": 15715,
+      "latitude": -34.83,
+      "longitude": 138.81
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 7,
+      "reservoirName": "Mt Bold Reservoir",
+      "capacityML": 46545,
+      "latitude": -35.12,
+      "longitude": 138.71
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 8,
+      "reservoirName": "Myponga Reservoir",
+      "capacityML": 27565,
+      "latitude": -35.40,
+      "longitude": 138.44
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 9,
+      "reservoirName": "South Para Reservoir",
+      "capacityML": 44833,
+      "latitude": -34.70,
+      "longitude": 138.87
+    }
+  },
+  {
+    "dateRange": {
+      "from": "2018-05-31T00:00:00",
+      "to": "2020-04-20T00:00:00"
+    },
+    "records": 23,
+    "reservoirDetail": {
+      "ReservoirVolumes": [],
+      "reservoirID": 10,
+      "reservoirName": "Warren Reservoir",
+      "capacityML": 4731,
+      "latitude": -34.71,
+      "longitude": 138.92
+    }
+  }
+]

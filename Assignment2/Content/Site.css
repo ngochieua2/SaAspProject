@@ -1,0 +1,6 @@
+﻿/* Add your custom CSS here */
+
+.table-hover tbody tr:hover {
+    cursor:pointer;
+}
+

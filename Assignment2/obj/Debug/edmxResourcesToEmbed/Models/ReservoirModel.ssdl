@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReservoirVolumesSAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Reservoirs">
+    <Key>
+      <PropertyRef Name="reservoirID" />
+    </Key>
+    <Property Name="reservoirID" Type="int" Nullable="false" />
+    <Property Name="reservoirName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="capacityML" Type="int" Nullable="false" />
+    <Property Name="latitude" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="longitude" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReservoirVolumes">
+    <Key>
+      <PropertyRef Name="recordID" />
+    </Key>
+    <Property Name="recordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="reservoirID" Type="int" Nullable="false" />
+    <Property Name="recordDate" Type="date" Nullable="false" />
+    <Property Name="volumeToday" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="volumeLastYear" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="averageVolume" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Reservoir__reser__34C8D9D1">
+    <End Role="Reservoirs" Type="Self.Reservoirs" Multiplicity="1" />
+    <End Role="ReservoirVolumes" Type="Self.ReservoirVolumes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reservoirs">
+        <PropertyRef Name="reservoirID" />
+      </Principal>
+      <Dependent Role="ReservoirVolumes">
+        <PropertyRef Name="reservoirID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ReservoirVolumesSAModelStoreContainer">
+    <EntitySet Name="Reservoirs" EntityType="Self.Reservoirs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReservoirVolumes" EntityType="Self.ReservoirVolumes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Reservoir__reser__34C8D9D1" Association="Self.FK__Reservoir__reser__34C8D9D1">
+      <End Role="Reservoirs" EntitySet="Reservoirs" />
+      <End Role="ReservoirVolumes" EntitySet="ReservoirVolumes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,29 @@
+[
+  {
+    "year": 2018,
+    "records": 7,
+    "avgVolume": 3876.522857,
+    "firstMonthNo": 5,
+    "lastMonthNo": 11,
+    "firstMonthName": "May",
+    "lastMonthName": "November"
+  },
+  {
+    "year": 2019,
+    "records": 11,
+    "avgVolume": 4076.302727,
+    "firstMonthNo": 1,
+    "lastMonthNo": 12,
+    "firstMonthName": "January",
+    "lastMonthName": "December"
+  },
+  {
+    "year": 2020,
+    "records": 5,
+    "avgVolume": 4103.906000,
+    "firstMonthNo": 1,
+    "lastMonthNo": 4,
+    "firstMonthName": "January",
+    "lastMonthName": "April"
+  }
+]

@@ -1,0 +1,39 @@
+﻿<h2 class="text-center">South Australian Reservoir Data</h2>
+
+<div class="row justify-content-center">
+    <div class="col-10 border rounded border-info">
+        <p>
+            This web application publishes South Australian Reservoir Data sourced from SA Water in recent years.
+            The original CSV source of data can be viewed at: <a href="https://data.sa.gov.au/data/dataset/reservoir-volumes-2018" target="_blank">Data SA</a>.<br />
+            All available data has been loaded into a semi-normalised database and erroneous values corrected.
+        </p>
+        <p>The web application consists of:</p>
+        <ol>
+            <li><strong>Index MVC View</strong> for viewing reservoir data records and graphs using Ajax Requests.</li>
+            <li>
+                <strong>ReservoirsController WebAPI</strong> for retreiving reservoir JSON data:
+                <ul>
+                    <li>GetReservoirs() - returns a list of SA Reservoirs</li>
+                    <li>GetReservoirs(id) - returns a list of annual records available for a given reservoir</li>
+                    <li>GetReservoirs(id, year) - returns a list of monthly records available for a given reservoir and year</li>
+                </ul>
+            </li>
+        </ol>
+        <p>The controller functions provide example URL requests required to activate each function.  Examples of the JSON data returned by each function can be found in the <strong>ExampleJsonData</strong> folder.</p>
+        <p>Example methods you may need to use in JQuery.  For examples on how to use each method consult: <a href="https://api.jquery.com/" target="_blank">JQuery API</a> as well as lectures/practical.</p>
+        <ul>
+            <li>.addClass()</li>
+            <li>.ajax()</li>
+            <li>.animate()</li>
+            <li>.appendTo()</li>
+            <li>.attr()</li>
+            <li>.css() or .width()</li>
+            <li>.empty()</li>
+            <li>.find()</li>
+            <li>.on('click', function() {...})</li>
+            <li>.removeClass()</li>
+            <li>.slideDown()</li>
+            <li>.text()</li>
+        </ul>
+    </div>
+</div>

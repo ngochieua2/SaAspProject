@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReservoirVolumesSAModelStoreContainer" CdmEntityContainer="ReservoirVolumesSAEntities">
+    <EntitySetMapping Name="Reservoirs">
+      <EntityTypeMapping TypeName="ReservoirVolumesSAModel.Reservoir">
+        <MappingFragment StoreEntitySet="Reservoirs">
+          <ScalarProperty Name="reservoirID" ColumnName="reservoirID" />
+          <ScalarProperty Name="reservoirName" ColumnName="reservoirName" />
+          <ScalarProperty Name="capacityML" ColumnName="capacityML" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReservoirVolumes">
+      <EntityTypeMapping TypeName="ReservoirVolumesSAModel.ReservoirVolume">
+        <MappingFragment StoreEntitySet="ReservoirVolumes">
+          <ScalarProperty Name="recordID" ColumnName="recordID" />
+          <ScalarProperty Name="reservoirID" ColumnName="reservoirID" />
+          <ScalarProperty Name="recordDate" ColumnName="recordDate" />
+          <ScalarProperty Name="volumeToday" ColumnName="volumeToday" />
+          <ScalarProperty Name="volumeLastYear" ColumnName="volumeLastYear" />
+          <ScalarProperty Name="averageVolume" ColumnName="averageVolume" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

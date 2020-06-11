@@ -1,0 +1,46 @@
+﻿@{ ViewBag.Title = "South Australia Reservoir Volumes"; }
+
+@section styles {
+    <style>
+        /* Place temporary CSS here them move to Site.css when happy =) */
+    </style>
+}
+
+
+<!-- Do NOT change this html.  All work must be done via the script element -->
+<div class="row">
+    <div class="col-5">
+        <div class="border rounded border-info p-1" id="reservoirList">
+            <h3 class="text-center">Reservoir List</h3>
+        </div>
+    </div>
+    <div class="col-7" id="graphs">
+
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        // write your JavaScript here
+        // example request provided
+
+        var $request = $.ajax({
+            url: '/api/Reservoirs',
+            method: 'GET',
+            timeout: 10000
+        })
+
+        $request.done(function (response) {
+            // TODO
+        })
+
+        $request.fail(function () {
+            // TODO
+            // append error message on page
+        })
+
+
+    </script>
+}
+
