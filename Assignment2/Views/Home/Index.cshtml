@@ -7,6 +7,9 @@
 }
 
 
+
+
+
 <!-- Do NOT change this html.  All work must be done via the script element -->
 <div class="row">
     <div class="col-5">
@@ -25,6 +28,7 @@
         // write your JavaScript here
         // example request provided
 
+
         var $request = $.ajax({
             url: '/api/Reservoirs',
             method: 'GET',
@@ -32,12 +36,35 @@
         })
 
         $request.done(function (response) {
+            var $thead = $('<thead>').appendTo($("#reservoirList"));
+            var $tr = $('<tr>').appendTo($thead);
+            $('<th>').text('Name').appendTo($tr);
+            $('<th>').text('Capacity (ML)').appendTo($tr);
+            $('<th>').text('').appendTo($tr);
+
+            var $tbody = $('<tbody>').appendTo($("#reservoirList"));
+
+            $.each(response, function (i, cust) {
+                var $tr = $('<tr>').appendTo($tbody);
+                $('<td>').text(cust.reservoirDetail.reservoirName).appendTo($tr);
+                $('<td>').text(cust.reservoirDetail.capacityML).appendTo($tr);
+
+                var $td = $('<td>').appendTo($tr);
+                $('<a>').attr('href', '#')
+                    .addClass('btn btn-sm btn-secondary mr-1').text('View Map').appendTo($td);
+
+           })
+        })
+
+        $request.done(function (response) {
             // TODO
+            alert("success")
         })
 
         $request.fail(function () {
             // TODO
             // append error message on page
+            alert("error");
         })
 
 
