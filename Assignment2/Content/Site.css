@@ -2,5 +2,10 @@
 
 .table-hover tbody tr:hover {
     cursor:pointer;
+    background-color: yellow;
 }
 
+.table table-striped {
+    background-color: red;
+}
+  

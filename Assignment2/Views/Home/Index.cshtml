@@ -1,9 +1,25 @@
 ﻿@{ ViewBag.Title = "South Australia Reservoir Volumes"; }
 
+
+
 @section styles {
     <style>
         /* Place temporary CSS here them move to Site.css when happy =) */
+        
+        .data-selected {
+            background-color: yellowgreen;
+        }
+        .list-group:hover {
+            cursor: pointer;
+        }
+
+        .list-selected {
+            background-color: yellowgreen;
+        }
+
     </style>
+   
+
 }
 
 
@@ -36,37 +52,135 @@
         })
 
         $request.done(function (response) {
-            var $thead = $('<thead>').appendTo($("#reservoirList"));
-            var $tr = $('<tr>').appendTo($thead);
-            $('<th>').text('Name').appendTo($tr);
-            $('<th>').text('Capacity (ML)').appendTo($tr);
-            $('<th>').text('').appendTo($tr);
 
-            var $tbody = $('<tbody>').appendTo($("#reservoirList"));
+            $('<table>').addClass('table table-hover table-sm').appendTo('#reservoirList');
 
-            $.each(response, function (i, cust) {
-                var $tr = $('<tr>').appendTo($tbody);
-                $('<td>').text(cust.reservoirDetail.reservoirName).appendTo($tr);
-                $('<td>').text(cust.reservoirDetail.capacityML).appendTo($tr);
+            $('<thead>').appendTo('#reservoirList table');
 
-                var $td = $('<td>').appendTo($tr);
-                $('<a>').attr('href', '#')
-                    .addClass('btn btn-sm btn-secondary mr-1').text('View Map').appendTo($td);
+            $('<tr>').appendTo('#reservoirList table thead');
 
-           })
+            $('<th>').text('Name').appendTo('#reservoirList table thead tr');
+
+            $('<th>').text('Capacity (ML)').appendTo('#reservoirList table thead tr');
+
+            $('<th>').text('').appendTo('#reservoirList table thead tr');
+
+            $('<tbody>').appendTo('#reservoirList table');
+
+            $.each(response, function (i, value) {
+                var eachRow = $('<tr>').addClass('data')
+                    .attr('title', 'Click to view ' + value.reservoirDetail.reservoirName
+                                    + ' capacity from ' + value.dateRange.from + ' to ' + value.dateRange.to
+                                    + ' [' + value.records + ' records] ')
+                    .on('click', function () {
+
+                        $('tr').removeClass('data-selected');
+                        $(this).addClass('data-selected');
+
+                        //$('#graphs').remove(); //Remove the previous graph
+                        $('.list-group').remove();
+
+                        showGraph(value.reservoirDetail.reservoirID); // call function to show graph
+
+                    }).appendTo('#reservoirList table tbody');
+
+                $('<td>').text(value.reservoirDetail.reservoirName).appendTo(eachRow);
+
+                $('<td>').text(value.reservoirDetail.capacityML).appendTo(eachRow);
+
+                var button = $('<td>').appendTo(eachRow);
+                $('<a>')
+                    .attr('href', 'https://www.google.com/maps/place/' + value.reservoirDetail.reservoirName)
+                    .attr('target', '_blank')
+                    .addClass('btn btn-outline-primary btn-sm mr-1')
+                    .text('View Map')
+                    .appendTo(button);
+            });
+
         })
 
-        $request.done(function (response) {
-            // TODO
-            alert("success")
-        })
+        //$request.done(function (response) {
+        //    // TODO
+        //    alert("success")
+        //})
+
+
+        //impage when Ajax Fails
+        var errorImg = $('<img>')
+            .attr('src', '/errorPicture.jpg')
+            .attr('width', '200px')
+            .attr('hight', '400px')
+            .css('margin-left', '50px');
 
         $request.fail(function () {
             // TODO
             // append error message on page
-            alert("error");
+
+            $('<div>').appendTo('#reservoirList');
+            errorImg.appendTo('#reservoirList div');
+
+            $('<p>').addClass('error-text').text('Failed to load Reservoir Data').appendTo('#reservoirList div');
+
+            //alert("Failed to load Reservoir Data");
         })
 
+
+        // add graph
+        function showGraph(ID) {
+
+            //Request data from ID
+            var $requestGraph = $.ajax({
+                url: '/api/Reservoirs/' + ID,
+                method: 'GET',
+                timeout: 10000
+            })
+
+            $requestGraph.done(function (response) {
+
+
+                $('<div>').addClass('list-group').appendTo('#graphs');
+
+                $.each(response, function (i, value) {
+                    var list = $('<a>')
+                        .addClass('list-group-item list-group-item-action')
+                        .attr('title', 'Click to view volume detail')
+                        .on('click', function () {
+
+                            $('a').removeClass('list-selected');
+                            $(this).addClass('list-selected');
+
+                        })
+                        .appendTo('#graphs div');
+
+
+                    $('<h5>').addClass('mb-1').text(value.year).appendTo(list);
+
+                    $('<p>').addClass('mb-1').text('Records: ' + value.records + ' dating from ' + convertMonthName(value.firstMonthNo) + ' to ' + convertMonthName(value.lastMonthNo)).appendTo(list);
+
+                    $('<p>').addClass('mb-1').text('Avg Volume: ' + converNumber(value.avgVolume)+' ML').appendTo(list);
+                });
+            })
+
+
+            //})
+
+            //$requestGraph.done(function (response) {
+            //// TODO
+            //    alert("success")
+            //})
+
+        }
+
+        //Convert month number to month name
+        function convertMonthName(monthNumber) {
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[monthNumber - 1];
+        }
+
+        //Convert Number
+        function converNumber(number) {
+            return number.toFixed(3).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        }
 
     </script>
 }
