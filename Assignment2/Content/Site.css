@@ -2,10 +2,18 @@
 
 .table-hover tbody tr:hover {
     cursor:pointer;
-    background-color: yellow;
+    
+}
+.data-selected {
+    background-color: yellowgreen;
 }
 
-.table table-striped {
-    background-color: red;
+.list-group:hover {
+    cursor: pointer;
 }
+
+.list-selected {
+    background-color: yellowgreen;
+}
+
   

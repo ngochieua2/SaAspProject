@@ -3,26 +3,18 @@
 
 
 @section styles {
+<script src="/Scripts/jquery-3.5.1.js"></script>
+<script src="/Scripts/d3/d3.js"></script>
+<link href="/Content/Site.css" rel="stylesheet" />
+
     <style>
         /* Place temporary CSS here them move to Site.css when happy =) */
         
-        .data-selected {
-            background-color: yellowgreen;
-        }
-        .list-group:hover {
-            cursor: pointer;
-        }
-
-        .list-selected {
-            background-color: yellowgreen;
-        }
 
     </style>
    
 
 }
-
-
 
 
 
@@ -41,9 +33,11 @@
 
 @section scripts {
     <script>
+
         // write your JavaScript here
         // example request provided
 
+        var name = ''; //store name of reservoir
 
         var $request = $.ajax({
             url: '/api/Reservoirs',
@@ -68,7 +62,7 @@
             $('<tbody>').appendTo('#reservoirList table');
 
             $.each(response, function (i, value) {
-                var eachRow = $('<tr>').addClass('data')
+                var row = $('<tr>').addClass('data')
                     .attr('title', 'Click to view ' + value.reservoirDetail.reservoirName
                                     + ' capacity from ' + value.dateRange.from + ' to ' + value.dateRange.to
                                     + ' [' + value.records + ' records] ')
@@ -77,18 +71,19 @@
                         $('tr').removeClass('data-selected');
                         $(this).addClass('data-selected');
 
-                        //$('#graphs').remove(); //Remove the previous graph
-                        $('.list-group').remove();
+                        name = value.reservoirDetail.reservoirName;
+                        
+                        $('.list-group').remove(); //Remove the previous graph
 
                         showGraph(value.reservoirDetail.reservoirID); // call function to show graph
 
                     }).appendTo('#reservoirList table tbody');
 
-                $('<td>').text(value.reservoirDetail.reservoirName).appendTo(eachRow);
+                $('<td>').text(value.reservoirDetail.reservoirName).appendTo(row);
 
-                $('<td>').text(value.reservoirDetail.capacityML).appendTo(eachRow);
+                $('<td>').text(value.reservoirDetail.capacityML).appendTo(row);
 
-                var button = $('<td>').appendTo(eachRow);
+                var button = $('<td>').appendTo(row);
                 $('<a>')
                     .attr('href', 'https://www.google.com/maps/place/' + value.reservoirDetail.reservoirName)
                     .attr('target', '_blank')
@@ -99,18 +94,13 @@
 
         })
 
-        //$request.done(function (response) {
-        //    // TODO
-        //    alert("success")
-        //})
-
 
         //impage when Ajax Fails
         var errorImg = $('<img>')
             .attr('src', '/errorPicture.jpg')
-            .attr('width', '200px')
-            .attr('hight', '400px')
-            .css('margin-left', '50px');
+            .attr('width', '400px')
+            .attr('hight', '800px')
+            .css('margin-left', '30px');
 
         $request.fail(function () {
             // TODO
@@ -121,7 +111,6 @@
 
             $('<p>').addClass('error-text').text('Failed to load Reservoir Data').appendTo('#reservoirList div');
 
-            //alert("Failed to load Reservoir Data");
         })
 
 
@@ -143,31 +132,47 @@
                 $.each(response, function (i, value) {
                     var list = $('<a>')
                         .addClass('list-group-item list-group-item-action')
-                        .attr('title', 'Click to view volume detail')
                         .on('click', function () {
 
                             $('a').removeClass('list-selected');
                             $(this).addClass('list-selected');
+                            
+                            showDetails(ID, value.year, list ) // call funtion to show detail
+
 
                         })
                         .appendTo('#graphs div');
 
 
-                    $('<h5>').addClass('mb-1').text(value.year).appendTo(list);
+                    $('<h5>').addClass('mb-1').text(value.year).attr('title', 'Click to view volume detail').appendTo(list);
 
-                    $('<p>').addClass('mb-1').text('Records: ' + value.records + ' dating from ' + convertMonthName(value.firstMonthNo) + ' to ' + convertMonthName(value.lastMonthNo)).appendTo(list);
+                    $('<p>')
+                        .addClass('mb-1')
+                        .attr('title', 'Click to view volume detail')
+                        .text('Records: ' + value.records + ' dating from ' + convertMonthName(value.firstMonthNo) + ' to ' + convertMonthName(value.lastMonthNo))
+                        .appendTo(list);
 
-                    $('<p>').addClass('mb-1').text('Avg Volume: ' + converNumber(value.avgVolume)+' ML').appendTo(list);
+                    $('<p>').addClass('mb-1')
+                        .text('Avg Volume: ' + converNumber(value.avgVolume) + ' ML')
+                        .attr('title', 'Click to view volume detail')
+                        .appendTo(list);
+
+                   
                 });
             })
 
 
-            //})
+            $requestGraph.fail(function (response) {
+                $('.list-group').remove(); // remove list in graph
 
-            //$requestGraph.done(function (response) {
-            //// TODO
-            //    alert("success")
-            //})
+                $('.graph-error').remove(); // remove error graph before show other error
+
+                $('<div>').addClass('graph-error').appendTo('#graphs');
+
+                errorImg.appendTo('.graph-error');
+
+                $('<p>').addClass('error-text').text('Failed to load lists').appendTo('.graph-error');
+            })
 
         }
 
@@ -181,6 +186,193 @@
         function converNumber(number) {
             return number.toFixed(3).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         }
+
+        // show detail of year
+        function showDetails(ID, year, list) {
+
+            // request data from ID and year
+            var $requestDetails = $.ajax({
+                url: '/api/Reservoirs/' + ID +'?year='+year,
+                method: 'GET',
+                timeout: 10000
+            })
+
+
+            $requestDetails.done(function (response) {
+
+                $(".text-center").remove();// remove title
+                $(".svg-div").remove();// remove detail graph
+
+              
+                // add title
+                $('<h5>').addClass('text-center').text(name + ' in ' + year).hide().appendTo(list);
+
+                // Create the div for svg
+                $('<div>').addClass('svg-div').appendTo(list);
+
+                
+
+                // select svg element
+                var svg = d3.select('.svg-div').append('svg').attr('width', '100%').attr('height', '700').style('border', '1.5px solid #000');
+
+
+                // determine the size of the SVG element
+                var w = svg.node().getBoundingClientRect().width;
+                var h = svg.node().getBoundingClientRect().height;
+
+                // create Chart Margins
+                var chartMargin = new Object();
+                chartMargin.left = 120;
+                chartMargin.right = 25;
+                chartMargin.top = 70;
+                chartMargin.bottom = 100;
+
+                // reduce the available SVG width
+                w = w - chartMargin.left - chartMargin.right;
+
+                // get the max volume
+                var maxVolume = d3.max(response, function (d) { return d.avgVolume; });
+
+                // set bar dimensions
+                var barMargin = 10;
+                var barHeight = (h - chartMargin.top - chartMargin.bottom) / response.length;
+
+                // Create a xScale
+                var xScale = d3.scaleLinear()
+                    .domain([0, maxVolume])
+                    .range([0, w]);
+
+                // Create an yScale
+                var yScale = d3.scaleBand()
+                    .domain(response.map(function (d) { return d.dayNo+' '+convertMonthName(d.monthNo); })) // get monthName and day to have duplicate 
+                    .range([0, h - chartMargin.top - chartMargin.bottom])
+                    .paddingInner(0.15); // margin between bars
+
+                var chartGroup = svg.append('g')
+                    .classed('chartGroup', true)
+                    .attr('transform', 'translate(' + chartMargin.left + ',' + chartMargin.top + ')');
+
+
+                // Select all bar groups
+                var barGroups = chartGroup
+                    .selectAll('g')
+                    .data(response);
+
+
+                //  add new bar groups
+                var newBarGroups = barGroups.enter()
+                    .append('g')
+                    .attr('transform', function (d, i) {
+                        return 'translate(' + 0 + ',' + (i * barHeight) + ')';
+                    });
+
+
+                // create the xaxis and add them to the page
+                var xAxis = d3.axisBottom(xScale); // declare the axis generator
+                chartGroup.append('g')
+                    .attr('transform', 'translate(0,' + (h - chartMargin.top - chartMargin.bottom) + ')')
+                    .classed('axis x', true)
+                    .call(xAxis);
+
+
+                // add text label for x axis
+                chartGroup.append('text')
+                    .attr('transform', 'translate(' + (w / 2 + 75) + ',' + (h - chartMargin.bottom -20) + ')')
+                    .attr('dx', '1em')
+                    .attr('dy', '1em')
+                    .style('text-anchor', 'end')
+                    .style('font-size', '1.25em')
+                    .text('Reservoid Volume (ML)');
+
+
+                // create the y-axis of graph
+                var yAxis = d3.axisLeft(yScale); // declare the axis generator
+                chartGroup.append('g')
+                    .classed('axis y', true)
+                    .call(yAxis)
+                    .selectAll('text')
+                    .style('text-anchor', 'end') 
+                    .style('font-size', '1.5em'); 
+
+
+                // add text label for y axis
+                chartGroup.append('text')
+                    .attr('transform', function (d, i) {
+                        return 'translate(' + 0 + ',' + (i * barHeight) + ')';
+                    })
+                    .style('text-anchor', 'middle')
+                    .text('Month')
+                    .attr('dx', '-1em')
+                    .attr('dy', '-1em')
+                    .style('font-size', '1.25em');
+
+                newBarGroups
+                    .append('rect')
+                    .attr("class", "bar")
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('width', 0)
+                    .attr('height', barHeight - barMargin)
+                    .style("fill", function (d, i) {
+                        return "hsl(310, 100%, " + (d.avgVolume / maxVolume * 80) + "%)"
+                    })
+                    .transition() // animation
+                    .duration(1200)
+                    .delay(function (d, i) { return (i * 100) })
+                    .attr('width', function (d, i) {
+                        return xScale(d.avgVolume);
+                    });
+
+               
+                // add bar text
+                newBarGroups
+                    .append('text')
+                    .attr('text-anchor', 'end')
+                    .attr('y', function () { return (yScale.bandwidth() + barMargin) / 2; })
+                    .attr('x', function (d, i) {
+                        return xScale(d.avgVolume) - 10;
+                    })
+                    .attr('fill', 'white')
+                    .text(function (d, i) { return converNumber(d.avgVolume); })
+                    .style('font-size', '1em')
+
+
+
+                // tool-tip
+                var tooltip = d3.select('.svg-div')
+                    .append('div')
+                    .style('display', 'none');
+
+                d3.selectAll('rect')
+                    .on('mousemove', function (d) {
+
+                        return tooltip.style('display', 'inline')
+                            .html(converNumber(d.avgVolume) + ' ML on ' + d.dayNo +' '+convertMonthName(d.monthNo) +' of ' + d.year);
+                    })
+                    .on('mouseout', function () { return tooltip.style('display', 'none'); });
+
+
+                // slide down
+                $(".text-center").slideDown(500);
+                //$(".svg-div").slideDown(1000);
+
+            })
+
+            $requestDetails.fail(function (response) {
+                $(".text-center").remove(); // remove title
+                $(".svg-div").remove(); // remove detail graph
+
+                $('.graph-error').remove(); // remove error graph before show other error
+
+                $('<div>').addClass('graph-error').appendTo('#graphs');
+
+                errorImg.appendTo('.graph-error');
+
+                $('<p>').addClass('error-text').text('Failed to load lists').appendTo('.graph-error');
+            })
+
+        }
+
 
     </script>
 }
